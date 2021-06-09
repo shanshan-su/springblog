@@ -8,11 +8,13 @@
         <version>2.5.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>com.codeup</groupId>
     <artifactId>springblog</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>springblog</name>
     <description>Spring blog project for Spring Boot</description>
+
     <properties>
         <java.version>11</java.version>
     </properties>
