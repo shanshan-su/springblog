@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dice Result</title>
+</head>
+<body>
+<th:block th:if="${number == diceNumber}">
+    <p>The dice number was <span th:text="${diceNumber}"></span>, and your number was <span th:text="${number}"></span>. Hooray!! You got the right number!! You won!!!</p>
+</th:block>
+
+<th:block th:if="${number != diceNumber}">
+    <p>The dice number was <span th:text="${diceNumber}"></span>, and your number was <span th:text="${number}"></span>. Sorry, you got the wrong number :( Do you want to try again?</p>
+</th:block>
+</body>
+</html>

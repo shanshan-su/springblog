@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Roll Dice</title>
+</head>
+<body>
+<h1>Guessing Game</h1>
+<p>I'm going to roll a dice and you can guess the number I get. The number will be between 1 and 6.</p>
+<p>Are you ready?</p>
+
+<form action="/roll-dice/1" method="post">
+    <input type="hidden" name="number" value="1">
+    <button type="submit">1</button>
+</form>
+<form action="/roll-dice/2" method="post">
+    <input type="hidden" name="number" value="2">
+    <button name="number" type="submit">2</button>
+</form>
+<form action="/roll-dice/3" method="post">
+    <input type="hidden" name="number" value="3">
+    <button type="submit">3</button>
+</form>
+<form action="/roll-dice/4" method="post">
+    <input type="hidden" name="number" value="4">
+    <button type="submit">4</button>
+</form>
+<form action="/roll-dice/5" method="post">
+    <input type="hidden" name="number" value="5">
+    <button type="submit">5</button>
+</form>
+<form action="/roll-dice/6" method="post">
+    <input type="hidden" name="number" value="6">
+    <button type="submit">6</button>
+</form>
+</body>
+</html>
