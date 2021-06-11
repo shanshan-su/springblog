@@ -2,17 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<head th:replace="/partials/head :: head"></head>
+<head th:replace="/partials/head :: head">
+    <title>Users</title>
+</head>
 <body>
 <nav th:replace="/partials/navbar :: bootstrap_navbar"></nav>
-<h1>Here are all the users.</h1>
-<!--<p>first name - <span th:text="${user.firstName}"></span></p>-->
-<!--<p>last name - <span th:text="${user.lastName}"></span></p>-->
+<main>
+    <h1>Here are all the users.</h1>
+    <!--<p>first name - <span th:text="${user.firstName}"></span></p>-->
+    <!--<p>last name - <span th:text="${user.lastName}"></span></p>-->
 
 
 
-<div th:each="user : ${users}">
-    <p th:text="${user.fullName}" />
-</div>
+    <div th:each="user : ${users}">
+        <p th:text="${user.fullName}" />
+    </div>
+</main>
+
+<footer th:replace="/partials/footer :: footer"></footer>
 </body>
 </html>
