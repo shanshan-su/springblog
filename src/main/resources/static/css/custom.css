@@ -1,12 +1,53 @@
+html {
+    height: 100%;
+}
 
+body {
+    box-sizing: border-box;
+    min-height: 100%;
+    position: relative;
+    paddind-bottom: 193px;
+}
 
+main {
+    margin: 2rem;
+    flex: 1 0 auto;
+}
 
+/* ------------------ nav ------------------ */
+nav {
+    background-color: mediumpurple;
+}
 
 /* ------------------ footer ------------------ */
 footer {
+    background-color: mediumpurple;
     background-image: url("/images/footer-img.png");
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 193px;
 }
 
 li {
     list-style: none;
+}
+
+footer a {
+    color: black;
+}
+
+
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    body {
+        paddind-bottom: 112px;
+    }
+
+    footer {
+        height: 112px;
+    }
+
 }
