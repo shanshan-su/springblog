@@ -4,41 +4,50 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 @Controller
 public class PostController {
+    private final PostRepository postDao;
 
-    @RequestMapping(path = "/posts", method = RequestMethod.GET)
+    public PostController(PostRepository postDao) {
+        this.postDao = postDao;
+    }
+
+
+    @GetMapping(path = "/posts")
     public String indexPage(Model model) {
-        List<Post> posts = new ArrayList<>(Arrays.asList(
-                new Post("My First Full Stack Application", "We were working on the project for about 4 days. And now it's nearly done!"),
-                new Post("I don't like rain", "It's finally a sunny day today!!!"))
-        );
-
-        model.addAttribute("posts", posts);
-        return "/posts/index";
+        model.addAttribute("posts", postDao.findAll());
+        return "posts/index";
     }
 
     @RequestMapping(path = "/posts/{id}", method = RequestMethod.GET)
-    public String viewPost(@PathVariable int id, Model model) {
-        Post post = new Post("My First Full Stack Application", "We were working on the project for about 4 days. And now it's nearly done!");
-        model.addAttribute("post", post);
-        return "/posts/show";
+    public String viewPost(@PathVariable long id, Model model) {
+        model.addAttribute("post", postDao.findPostById(id));
+        return "posts/show";
     }
 
     @RequestMapping(path = "/posts/create", method = RequestMethod.GET)
-    @ResponseBody
     public String getPostForm() {
-        return "view the form for creating a post";
+        return "posts/create";
     }
 
     @RequestMapping(path = "/posts/create", method = RequestMethod.POST)
-    @ResponseBody
-    public String createPost() {
-        return "create a new post";
+    public String create(@RequestParam String title, String body, Model model) {
+        Post post = new Post(title, body);
+        model.addAttribute("post", postDao.save(post));
+        return "posts/show";
+    }
+
+    @GetMapping(path = "/posts/edit")
+    public String editForm(@RequestParam long id, Model model) {
+        model.addAttribute("post", postDao.findPostById(id));
+        return "posts/edit";
+    }
+
+    @PostMapping(path = "/posts/edit")
+    public String edit(@RequestParam long id, String title, String body, Model model) {
+        Post post = new Post(id, title, body);
+        model.addAttribute("post", postDao.saveAndFlush(post));
+        return "posts/show";
     }
 
 }

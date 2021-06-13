@@ -15,8 +15,8 @@ public class UserController {
     public String getAllUsers(Model model) {
         List<User> users = new ArrayList<>();
 
-        users.add(new User("Samuel", "Moore"));
-        users.add(new User("Andrew", "Walsh"));
+//        users.add(new User("Samuel", "Moore", "samm", "samm@codeup.com"));
+//        users.add(new User("Andrew", "Walsh"));
 
 
         model.addAttribute("users", users);
@@ -25,7 +25,7 @@ public class UserController {
 
     @GetMapping("/user")
     public String getUserString(Model model) {
-        model.addAttribute("user", new User("Douglas", "Hirsh"));
+//        model.addAttribute("user", new User("Douglas", "Hirsh"));
         return "users";
     }
 

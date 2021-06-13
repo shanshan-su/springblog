@@ -10,6 +10,12 @@
     <h1>Here is your post.</h1>
     <h3 th:text="${post.title}"></h3>
     <p th:text="${post.body}"></p>
+
+    <form action="/posts/edit">
+        <input type="hidden" name="id" th:value="${post.id}">
+        <button type="submit" class="btn btn-primary">Edit</button>
+    </form>
+
 </main>
 
 

@@ -1,35 +1,29 @@
 package com.codeup.springblog;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="users")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(nullable = false, length = 100)
     private String firstName;
+
+    @Column(nullable = false, length = 100)
     private String lastName;
 
-    public User() {}
+    @Column(nullable = false, length = 50)
+    private String userName;
 
-    public User(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+    @Column(nullable = false, length = 50)
+    private String email;
 
-    public String getFirstName() {
-        return this.firstName;
-    }
+    @Column(nullable = false, length = 250)
+    private String password;
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFullName() {
-        return this.firstName + " " + this.lastName;
-    }
 
 }
