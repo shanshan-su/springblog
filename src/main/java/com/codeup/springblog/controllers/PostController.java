@@ -1,5 +1,9 @@
-package com.codeup.springblog;
+package com.codeup.springblog.controllers;
 
+import com.codeup.springblog.models.Post;
+import com.codeup.springblog.daos.PostRepository;
+import com.codeup.springblog.models.User;
+import com.codeup.springblog.daos.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -51,7 +55,7 @@ public class PostController {
     }
 
     @RequestMapping(path = "/posts/create", method = RequestMethod.POST)
-    public String create(@ModelAttribute Post post, Model model) {
+    public String create(@ModelAttribute Post post) {
         User user = userDao.getById(1L);
         post.setUser(user);
         postDao.save(post);
@@ -69,7 +73,9 @@ public class PostController {
                        @RequestParam(name = "title") String title,
                        @RequestParam(name = "body") String body,
                        Model model) {
+        User user = userDao.getById(1L);
         Post post = new Post(id, title, body);
+        post.setUser(user);
         model.addAttribute("post", postDao.saveAndFlush(post));
         return "redirect:/posts/" + id;
     }
