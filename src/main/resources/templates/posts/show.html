@@ -11,6 +11,9 @@
     <h3 th:text="${post.title}"></h3>
     <p th:text="${post.user.email}"></p>
     <p th:text="${post.body}"></p>
+    <div th:each="image : ${post.images}">
+        <img th:src="${image.path}" th:alt="${image.description}">
+    </div>
 
     <form th:action="${'/posts/' + post.id + '/edit'}">
         <button type="submit" class="btn btn-primary">Edit</button>
