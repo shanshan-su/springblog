@@ -20,6 +20,18 @@ public class PostController {
         return "users";
     }
 
+    @GetMapping(path = "/register")
+    public String getRegisterForm(Model model) {
+        model.addAttribute("user", new User());
+        return "register";
+    }
+
+    @PostMapping(path = "/register")
+    public String register(@ModelAttribute User user, Model model) {
+        model.addAttribute("user", userDao.save(user));
+        return "profile";
+    }
+
     @GetMapping(path = "/posts")
     public String indexPage(Model model) {
         model.addAttribute("posts", postDao.findAll());
@@ -33,34 +45,39 @@ public class PostController {
     }
 
     @RequestMapping(path = "/posts/create", method = RequestMethod.GET)
-    public String getPostForm() {
+    public String getPostForm(Model model) {
+        model.addAttribute("post", new Post());
         return "posts/create";
     }
 
     @RequestMapping(path = "/posts/create", method = RequestMethod.POST)
-    public String create(@ModelAttribute Post post) {
+    public String create(@ModelAttribute Post post, Model model) {
+        User user = userDao.getById(1L);
+        post.setUser(user);
         postDao.save(post);
-        return "posts/show";
+        return "redirect:/posts/" + post.getId();
     }
 
-    @GetMapping(path = "/posts/edit")
-    public String editForm(@RequestParam long id, Model model) {
-        model.addAttribute("post", postDao.findPostById(id));
+    @GetMapping(path = "/posts/{id}/edit")
+    public String showEditForm(@PathVariable long id, Model model) {
+        model.addAttribute("post", postDao.getById(id));
         return "posts/edit";
     }
 
-    @PostMapping(path = "/posts/edit")
-    public String edit(@RequestParam long id, String title, String body, Model model) {
+    @PostMapping(path = "/posts/{id}/edit")
+    public String edit(@PathVariable long id,
+                       @RequestParam(name = "title") String title,
+                       @RequestParam(name = "body") String body,
+                       Model model) {
         Post post = new Post(id, title, body);
         model.addAttribute("post", postDao.saveAndFlush(post));
-        return "posts/show";
+        return "redirect:/posts/" + id;
     }
 
-    @PostMapping(path = "/posts/delete")
-    public String delete(@RequestParam long id, Model model) {
+    @PostMapping(path = "/posts/{id}/delete")
+    public String delete(@PathVariable long id) {
         postDao.deleteById(id);
-        model.addAttribute("posts", postDao.findAll());
-        return "posts/index";
+        return "redirect:/posts";
     }
 
 

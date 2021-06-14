@@ -12,11 +12,10 @@
     <p th:text="${post.user.email}"></p>
     <p th:text="${post.body}"></p>
 
-    <form action="/posts/edit">
-        <input type="hidden" name="id" th:value="${post.id}">
+    <form th:action="${'/posts/' + post.id + '/edit'}">
         <button type="submit" class="btn btn-primary">Edit</button>
     </form>
-    <form action="/posts/delete" method="post">
+    <form th:action="@{/posts/{id}/delete(id=${post.getId()})}" method="post">
         <input type="hidden" name="id" th:value="${post.id}">
         <button type="submit" class="btn btn-primary">Delete</button>
     </form>
