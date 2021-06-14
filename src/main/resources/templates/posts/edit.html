@@ -8,8 +8,8 @@
 <nav th:replace="/partials/navbar :: bootstrap_navbar"></nav>
 <main>
     <h1>Create you post here.</h1>
-    <form>
-      <input type="hidden" name="id" th:value="${post.id}">
+    <form action="/posts/edit" method="post">
+        <input type="hidden" name="id" th:value="${post.id}">
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" class="form-control" id="title" name="title" th:value="${post.title}">

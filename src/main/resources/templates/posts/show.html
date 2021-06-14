@@ -15,6 +15,10 @@
         <input type="hidden" name="id" th:value="${post.id}">
         <button type="submit" class="btn btn-primary">Edit</button>
     </form>
+    <form action="/posts/delete" method="post">
+        <input type="hidden" name="id" th:value="${post.id}">
+        <button type="submit" class="btn btn-primary">Delete</button>
+    </form>
 
 </main>
 

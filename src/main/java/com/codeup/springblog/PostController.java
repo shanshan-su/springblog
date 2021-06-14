@@ -50,4 +50,12 @@ public class PostController {
         return "posts/show";
     }
 
+    @PostMapping(path = "/posts/delete")
+    public String delete(@RequestParam long id, Model model) {
+        postDao.deleteById(id);
+        model.addAttribute("posts", postDao.findAll());
+        return "posts/index";
+    }
+
+
 }
