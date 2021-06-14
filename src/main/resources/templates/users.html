@@ -15,7 +15,8 @@
 
 
     <div th:each="user : ${users}">
-        <p th:text="${user.fullName}" />
+        <p th:text="${user.username}"></p>
+        <p th:text="${user.email}"></p>
     </div>
 </main>
 

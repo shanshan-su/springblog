@@ -9,6 +9,7 @@
 <main>
     <h1>Here is your post.</h1>
     <h3 th:text="${post.title}"></h3>
+    <p th:text="${post.user.email}"></p>
     <p th:text="${post.body}"></p>
 
     <form action="/posts/edit">

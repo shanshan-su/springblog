@@ -14,6 +14,11 @@ public class PostController {
         this.userDao = userDao;
     }
 
+    @GetMapping(path = "/users")
+    public String usersPage(Model model) {
+        model.addAttribute("users", userDao.findAll());
+        return "users";
+    }
 
     @GetMapping(path = "/posts")
     public String indexPage(Model model) {
@@ -33,9 +38,8 @@ public class PostController {
     }
 
     @RequestMapping(path = "/posts/create", method = RequestMethod.POST)
-    public String create(@RequestParam String title, String body, Model model) {
-        Post post = new Post(title, body);
-        model.addAttribute("post", postDao.save(post));
+    public String create(@ModelAttribute Post post) {
+        postDao.save(post);
         return "posts/show";
     }
 
