@@ -9,7 +9,7 @@
 <main>
     <h1>Here is your post.</h1>
     <h3 th:text="${post.title}"></h3>
-    <p th:text="${post.user.email}"></p>
+    <p>Created by the user on this email: <span th:text="${post.user.email}"></span></p>
     <p th:text="${post.body}"></p>
     <div th:each="image : ${post.images}">
         <img th:src="${image.path}" th:alt="${image.description}">
