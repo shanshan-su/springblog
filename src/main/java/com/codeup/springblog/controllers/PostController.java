@@ -2,24 +2,23 @@ package com.codeup.springblog.controllers;
 
 import com.codeup.springblog.models.Post;
 import com.codeup.springblog.daos.PostRepository;
-import com.codeup.springblog.models.PostImage;
 import com.codeup.springblog.models.User;
 import com.codeup.springblog.daos.UserRepository;
+import com.codeup.springblog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class PostController {
     private final PostRepository postsDao;
     private final UserRepository usersDao;
+    private final EmailService emailService;
 
-    public PostController(PostRepository postsDao, UserRepository usersDao) {
+    public PostController(PostRepository postsDao, UserRepository usersDao, EmailService emailService) {
         this.postsDao = postsDao;
         this.usersDao = usersDao;
+        this.emailService = emailService;
     }
 
     @GetMapping(path = "/users")
@@ -46,24 +45,27 @@ public class PostController {
         return "posts/index";
     }
 
-    @RequestMapping(path = "/posts/{id}", method = RequestMethod.GET)
+    @GetMapping(path = "/posts/{id}")
     public String viewPost(@PathVariable long id, Model model) {
         model.addAttribute("post", postsDao.findPostById(id));
         return "posts/show";
     }
 
-    @RequestMapping(path = "/posts/create", method = RequestMethod.GET)
+    @GetMapping(path = "/posts/create")
     public String getPostForm(Model model) {
         model.addAttribute("post", new Post());
         return "posts/create";
     }
 
-    @RequestMapping(path = "/posts/create", method = RequestMethod.POST)
+    @PostMapping(path = "/posts/create")
     public String create(@ModelAttribute Post post) {
         User user = usersDao.getById(1L);
         post.setUser(user);
         post.setImages(null);
         postsDao.save(post);
+
+        // send email to the user
+        emailService.prepareAndSend(post, "New Post Created", post.getBody());
         return "redirect:/posts/" + post.getId();
     }
 
