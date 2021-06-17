@@ -19,6 +19,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
                 </li>
+                <li class="nav-item">
+                    <form th:action="@{/logout}" th:method="post">
+                        <button class="btn-link btn">Logout</button>
+                    </form>
+                </li>
             </ul>
         </div>
     </nav>

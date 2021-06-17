@@ -3,7 +3,7 @@ package com.codeup.springblog.controllers;
 import com.codeup.springblog.models.Post;
 import com.codeup.springblog.daos.PostRepository;
 import com.codeup.springblog.models.User;
-import com.codeup.springblog.daos.UserRepository;
+import com.codeup.springblog.daos.UsersRepository;
 import com.codeup.springblog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,31 +12,13 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class PostController {
     private final PostRepository postsDao;
-    private final UserRepository usersDao;
+    private final UsersRepository usersDao;
     private final EmailService emailService;
 
-    public PostController(PostRepository postsDao, UserRepository usersDao, EmailService emailService) {
+    public PostController(PostRepository postsDao, UsersRepository usersDao, EmailService emailService) {
         this.postsDao = postsDao;
         this.usersDao = usersDao;
         this.emailService = emailService;
-    }
-
-    @GetMapping(path = "/users")
-    public String usersPage(Model model) {
-        model.addAttribute("users", usersDao.findAll());
-        return "users";
-    }
-
-    @GetMapping(path = "/register")
-    public String getRegisterForm(Model model) {
-        model.addAttribute("user", new User());
-        return "register";
-    }
-
-    @PostMapping(path = "/register")
-    public String register(@ModelAttribute User user, Model model) {
-        model.addAttribute("user", usersDao.save(user));
-        return "profile";
     }
 
     @GetMapping(path = "/posts")
