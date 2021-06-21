@@ -5,6 +5,7 @@ import com.codeup.springblog.daos.PostRepository;
 import com.codeup.springblog.models.User;
 import com.codeup.springblog.daos.UsersRepository;
 import com.codeup.springblog.services.EmailService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +13,10 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class PostController {
     private final PostRepository postsDao;
-    private final UsersRepository usersDao;
     private final EmailService emailService;
 
-    public PostController(PostRepository postsDao, UsersRepository usersDao, EmailService emailService) {
+    public PostController(PostRepository postsDao, EmailService emailService) {
         this.postsDao = postsDao;
-        this.usersDao = usersDao;
         this.emailService = emailService;
     }
 
@@ -41,7 +40,7 @@ public class PostController {
 
     @PostMapping(path = "/posts/create")
     public String create(@ModelAttribute Post post) {
-        User user = usersDao.getById(1L);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setUser(user);
         post.setImages(null);
         postsDao.save(post);
@@ -62,9 +61,9 @@ public class PostController {
                        @RequestParam(name = "title") String title,
                        @RequestParam(name = "body") String body,
                        Model model) {
-        User user = usersDao.getById(1L);
+//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Post post = postsDao.getById(id);
-        post.setUser(user);
+//        post.setUser(user);
         post.setTitle(title);
         post.setBody(body);
         model.addAttribute("post", postsDao.saveAndFlush(post));

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="/partials/head :: head">
     <meta charset="UTF-8">
     <title>Post</title>
@@ -9,10 +9,15 @@
 <main>
     <h1>Here is your post.</h1>
     <h3 th:text="${post.title}"></h3>
-    <p>Created by the user on this email: <span th:text="${post.user.email}"></span></p>
     <p th:text="${post.body}"></p>
     <div th:each="image : ${post.images}">
         <img th:src="${image.path}" th:alt="${image.description}">
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        Created by the user:
+        User ID: <span th:text="${#authentication.principal.id}"/>
+        Username: <span th:text="${#authentication.principal.username}"/>
+        Email: <span th:text="${#authentication.principal.email}"/>
     </div>
 
     <form th:action="${'/posts/' + post.id + '/edit'}">
